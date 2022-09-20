@@ -1,19 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "./logo.png";
+let token = sessionStorage.getItem("token");
 
 export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+  return (
+    <nav>
+      <Link to={"/"}>
+        <img src={logo} className="logo w-25 p-3" />
+      </Link>
+      <div className="menu">
+        <div className="button-div">
+          {!token && (
+            <Link to={"/signup"}>
+              <button className="button-74">Signup</button>
+            </Link>
+          )}
+          {!token && (
+            <Link to={"/login"}>
+              <button className="button-84">Log In</button>
+            </Link>
+          )}
+          {token && (
+            <Link to={"/favorites"}>
+              <button className="button-84">Favorites</button>
+            </Link>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
 };
