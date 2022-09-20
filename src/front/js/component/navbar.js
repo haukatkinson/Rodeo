@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "./logo.png";
+import logo2 from "./logo2.png";
 let token = sessionStorage.getItem("token");
 
 export const Navbar = () => {
   return (
     <nav>
       <Link to={"/"}>
-        <img src={logo} className="logo w-25 p-3" />
+        <img src={logo2} className="logo w-25 p-3" />
       </Link>
       <div className="menu">
         <div className="button-div">
