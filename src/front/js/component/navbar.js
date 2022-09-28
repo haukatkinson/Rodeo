@@ -1,9 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "./38ARENAlogo.png";
-let token = sessionStorage.getItem("token");
+import { Context } from "../store/appContext";
+import { Button, ButtonGroup } from "react-bootstrap";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+  let token = sessionStorage.getItem("token");
+
+  function handleLogOut() {
+    sessionStorage.clear();
+    navigate("/");
+  }
   return (
     <nav>
       <Link to={"/"}>
@@ -11,21 +20,21 @@ export const Navbar = () => {
       </Link>
       <div className="menu">
         <div className="button-div">
-          {!token && (
-            <Link to={"/signup"}>
-              <button className="button-74">Signup</button>
-            </Link>
+          {sessionStorage.getItem("token") ? (
+            <Button className="button-84" onClick={handleLogOut}>
+              Logout
+            </Button>
+          ) : (
+            <ButtonGroup>
+              <Button className="button-74" as={Link} to="/login">
+                Login
+              </Button>
+              <Button className="button-84" as={Link} to="/signup">
+                Signup
+              </Button>
+            </ButtonGroup>
           )}
-          {!token && (
-            <Link to={"/login"}>
-              <button className="button-84">Log In</button>
-            </Link>
-          )}
-          {token && (
-            <Link to={"/favorites"}>
-              <button className="button-84">Favorites</button>
-            </Link>
-          )}
+          ;
         </div>
       </div>
     </nav>

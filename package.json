@@ -75,8 +75,14 @@
 	"dependencies": {
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-bootstrap": "^2.5.0",
+		"react-bootstrap-validation": "^0.1.11",
 		"react-dom": "^16.8.4",
+		"react-hook-form": "^7.36.0",
+		"react-hook-form-resolvers": "^0.0.1",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-redux": "^8.0.4",
+		"react-router-dom": "^6.3.0",
+		"redux": "^4.2.0"
 	}
 }
