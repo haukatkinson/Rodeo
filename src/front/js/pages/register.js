@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
+  const [poster, setPoster] = useState("");
   const [show, setShowData] = useState("");
   const [location, setLocationData] = useState("");
   const [date, setDateData] = useState("");
@@ -20,6 +21,7 @@ const Register = () => {
       date: date,
       price: price,
       rules: rules,
+      poster: poster,
     };
     actions.register(register);
     navigate("/");
@@ -30,6 +32,13 @@ const Register = () => {
     <div className="create">
       <form onSubmit={handleSubmit}>
         <h1>Rodeo Register Form</h1>
+        <label>Add email</label>
+        <textarea
+          className="poster"
+          type="text"
+          value={poster}
+          onChange={(e) => setPoster(e.target.value)}
+        />
         <label>Add Show Name</label>
         <textarea
           className="show"

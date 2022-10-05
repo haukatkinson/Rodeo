@@ -13,6 +13,7 @@ from flask_jwt_extended import JWTManager
 import requests
 import datetime
 import json
+import jsonpickle
 
 api = Blueprint('api', __name__)
 
@@ -72,8 +73,15 @@ def login():
     if not user :
         return jsonify({"msg": "Bad email or password"}), 401
 
-    access_token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(minutes=60))    
+    access_token = create_access_token(identity=user.email, expires_delta=datetime.timedelta(minutes=60))    
     return jsonify(access_token=access_token)
+
+@api.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    # Access the identity of the current user with get_jwt_identity
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 @api.route('/registrations', methods=['GET'])
 def getRegistrations():
@@ -84,12 +92,13 @@ def getRegistrations():
 @api.route('/register', methods=['POST'])
 def eventRegister():
     body = request.json# get the request body content
+    poster = request.json.get('poster')
     show = request.json.get('show')
     location = request.json.get('location')
     date = request.json.get('date')
     price = request.json.get('price')
     rules = request.json.get('rules')
-    eventInfo = Register(show= show,location= location,date= date,price= price,rules= rules)
+    eventInfo = Register(poster= poster,show= show,location= location,date= date,price= price,rules= rules)
     db.session.add(eventInfo)
     db.session.commit()
     return jsonify(body), 201
@@ -100,3 +109,14 @@ def deleteregister(id):
     db.session.delete(register_to_delete)
     db.session.commit()
     return redirect(url_for("home"))
+
+@api.route('/register/<int:id>', methods=['GET'])
+def get_register_id(id):
+    registerSet = Register.query.all()
+    resp2 = [item.serialize() for item in registerSet]
+
+    register_info={}
+    for i in range(len(resp2)):
+        if resp2[i]["id"] == id:
+            register_info=resp2[i]
+    return jsonify(register_info)

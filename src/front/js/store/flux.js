@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       rodeo: [],
+      user: [],
+      singleRegister: {},
       alert: {
         type: "",
         msg: "",
@@ -114,6 +116,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         });
       },
+      protected: () => {
+        let token = sessionStorage.getItem("token");
+        const opts = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        fetch(`${process.env.BACKEND_URL}/api/protected`, opts)
+          .then((rep) => rep.json())
+          .then((data) => {
+            console.log(data);
+            setStore({
+              user: data,
+            });
+          });
+      },
       register: (data) => {
         const store = getStore();
 
@@ -146,6 +165,22 @@ const getState = ({ getStore, getActions, setStore }) => {
               rodeo: data,
             });
           });
+      },
+      get_register_id: async (id) => {
+        const resp = await fetch(
+          `${process.env.BACKEND_URL}/api/register/${id}`
+        );
+        const store = getStore();
+        try {
+          const data = await resp.json();
+          console.log(data);
+          setStore({ singleRegister: data });
+          // store.singleState = data.state_info;
+          // setStore(store);
+          console.log(store);
+        } catch (error) {
+          console.log(error);
+        }
       },
       deleteRegister: (id) => {
         const opts = {

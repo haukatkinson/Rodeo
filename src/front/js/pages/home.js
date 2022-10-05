@@ -58,10 +58,11 @@ export const Home = (rodeo) => {
                   text1={rodeo.show}
                   text2={rodeo.date}
                   text3={rodeo.location}
+                  link={rodeo.id}
                 />
-                <button onClick={handleDelete} className="deleteRegister">
+                {/* <button onClick={handleDelete} className="deleteRegister">
                   Delete Post
-                </button>
+                </button> */}
               </div>
             );
           })}

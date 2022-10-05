@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import jumboBanner from "./jumboBanner.jpeg";
 
-
 const Jumbotron = () => {
   return (
     <div

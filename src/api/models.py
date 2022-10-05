@@ -26,6 +26,7 @@ class User(db.Model):
 class Register(db.Model):
     __tablename__ = "register"
     id = db.Column(db.Integer, primary_key=True)
+    poster = db.Column(db.String(256), nullable=False)
     show = db.Column(db.String(), unique=False, nullable=False)
     location = db.Column(db.String(), unique=False, nullable=False)
     price = db.Column(db.String(), unique=False, nullable=False)
@@ -38,6 +39,7 @@ class Register(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "poster": self.poster,
             "show": self.show,
             "location": self.location,
             "price": self.price,
